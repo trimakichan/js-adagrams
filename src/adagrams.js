@@ -1,6 +1,8 @@
 import { LETTER_POOL, SCORE_CHART } from './constants.js';
 
 const HAND_SIZE = 10;
+const BONUS_MIN_LENGTH = 7;
+const LENGTH_BONUS_POINTS = 8;
 
 // Helper functions
 const generateLetterPool = letterCounts => {
@@ -58,7 +60,19 @@ export const usesAvailableLetters = (input, lettersInHand) => {
 };
 
 export const scoreWord = (word) => {
-  // Implement this method for wave 3
+  let score = 0;
+
+  for (let letter of word) {
+    letter = letter.toUpperCase();
+    score += SCORE_CHART[letter] ?? 0;
+  }
+
+  if (word.length >= BONUS_MIN_LENGTH) {
+    score += LENGTH_BONUS_POINTS;
+  }
+
+  return score;
+
 };
 
 export const highestScoreFrom = (words) => {
