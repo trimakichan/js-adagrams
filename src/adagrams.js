@@ -24,6 +24,25 @@ const generateLetterMap = lettersInHand => {
   return letterMap;
 };
 
+const pickWinnerFromTies = ties => {
+  let winner = ties[0];
+  let winnerWordLength = ties[0].word.length;
+
+  for (const wordObj of ties) {
+    const currentWord = wordObj.word;
+    const currentWordLength = currentWord.length;
+
+    if (currentWordLength === HAND_SIZE) return wordObj;
+
+    if (currentWordLength < winnerWordLength) {
+      winner = wordObj;
+    }
+  }
+
+  return { word: winner.word, score: winner.score };
+
+};
+
 export const drawLetters = () => {
 
   const letterPool = generateLetterPool(LETTER_POOL);
@@ -67,6 +86,7 @@ export const scoreWord = (word) => {
     score += SCORE_CHART[letter] ?? 0;
   }
 
+
   if (word.length >= BONUS_MIN_LENGTH) {
     score += LENGTH_BONUS_POINTS;
   }
@@ -76,8 +96,24 @@ export const scoreWord = (word) => {
 };
 
 export const highestScoreFrom = (words) => {
-  // Implement this method for wave 4
+
+  let bestScore = 0;
+
+  for (const word of words) {
+    const score = scoreWord(word);
+    if (score > bestScore) {
+      bestScore = score;
+    }
+  };
+
+  const ties = [];
+  for (const word of words) {
+    if (scoreWord(word) === bestScore) {
+      ties.push({ word, score: bestScore });
+    }
+  }
+
+  if (ties.length === 1) return { word: ties[0].word, score: bestScore };
+
+  return pickWinnerFromTies(ties);
 };
-
-
-
