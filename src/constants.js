@@ -1,3 +1,7 @@
+export const HAND_SIZE = 10;
+export const BONUS_MIN_LENGTH = 7;
+export const LENGTH_BONUS_POINTS = 8;
+
 export const LETTER_POOL = {
   'A': 9,
   'B': 2,

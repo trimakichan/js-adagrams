@@ -1,11 +1,8 @@
-import { LETTER_POOL, SCORE_CHART } from './constants.js';
-
-const HAND_SIZE = 10;
-const BONUS_MIN_LENGTH = 7;
-const LENGTH_BONUS_POINTS = 8;
+import { LETTER_POOL, SCORE_CHART, HAND_SIZE, BONUS_MIN_LENGTH, LENGTH_BONUS_POINTS } from './constants.js';
 
 // Helper functions
 const generateLetterPool = letterCounts => {
+
   const letterPool = [];
   for (const [letter, count] of Object.entries(letterCounts)) {
     for (let i = 0; i < count; i++) {
@@ -79,6 +76,7 @@ export const usesAvailableLetters = (input, lettersInHand) => {
 };
 
 export const scoreWord = (word) => {
+
   let score = 0;
 
   for (let letter of word) {
