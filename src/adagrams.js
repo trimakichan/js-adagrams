@@ -2,21 +2,39 @@ import { LETTER_POOL, SCORE_CHART } from './constants.js';
 
 const HAND_SIZE = 10;
 
-export const drawLetters = () => {
-  const allLetters = [];
-  const hand = [];
-
-  for (const [letter, count] of Object.entries(LETTER_POOL)) {
+// Helper functions
+const generateLetterPool = letterCounts => {
+  const letterPool = [];
+  for (const [letter, count] of Object.entries(letterCounts)) {
     for (let i = 0; i < count; i++) {
-      allLetters.push(letter);
+      letterPool.push(letter);
     }
   }
+  return letterPool;
+};
+
+const generateLetterMap = lettersInHand => {
+  const letterMap = new Map();
+
+  for (const letter of lettersInHand) {
+    letterMap.set(letter, (letterMap.get(letter) ?? 0) + 1);
+  }
+  return letterMap;
+};
+
+export const drawLetters = () => {
+
+  const letterPool = generateLetterPool(LETTER_POOL);
+
+  const hand = [];
+  let remainingLetters = letterPool.length;
 
   for (let i = 0; i < HAND_SIZE; i++) {
-    const randomIndex = Math.floor(Math.random() * allLetters.length);
-    hand.push(allLetters[randomIndex]);
-    allLetters[randomIndex] = allLetters[allLetters.length - 1];
-    allLetters.pop();
+    const randomIndex = Math.floor(Math.random() * remainingLetters);
+    hand.push(letterPool[randomIndex]);
+    letterPool[randomIndex] = letterPool[remainingLetters - 1];
+    letterPool.pop();
+    remainingLetters--;
   };
 
   return hand;
@@ -24,7 +42,19 @@ export const drawLetters = () => {
 };
 
 export const usesAvailableLetters = (input, lettersInHand) => {
-  // Implement this method for wave 2
+
+  const drawnMap = generateLetterMap(lettersInHand);
+
+  for (let letter of input) {
+    letter = letter.toUpperCase();
+    if (!drawnMap.has(letter) || drawnMap.get(letter) === 0) {
+      return false;
+    }
+
+    drawnMap.set(letter, drawnMap.get(letter) - 1);
+
+  }
+  return true;
 };
 
 export const scoreWord = (word) => {
@@ -35,6 +65,5 @@ export const highestScoreFrom = (words) => {
   // Implement this method for wave 4
 };
 
-drawLetters();
 
 
