@@ -2,7 +2,6 @@ import { LETTER_POOL, SCORE_CHART, HAND_SIZE, BONUS_MIN_LENGTH, LENGTH_BONUS_POI
 
 // Helper functions
 const generateLetterPool = letterCounts => {
-
   const letterPool = [];
   for (const [letter, count] of Object.entries(letterCounts)) {
     for (let i = 0; i < count; i++) {
@@ -33,6 +32,7 @@ const pickWinnerFromTies = ties => {
 
     if (currentWordLength < winnerWordLength) {
       winner = wordObj;
+      winnerWordLength = currentWordLength;
     }
   }
 
@@ -41,7 +41,6 @@ const pickWinnerFromTies = ties => {
 };
 
 export const drawLetters = () => {
-
   const letterPool = generateLetterPool(LETTER_POOL);
 
   const hand = [];
@@ -60,7 +59,6 @@ export const drawLetters = () => {
 };
 
 export const usesAvailableLetters = (input, lettersInHand) => {
-
   const drawnMap = generateLetterMap(lettersInHand);
 
   for (let letter of input) {
@@ -76,7 +74,6 @@ export const usesAvailableLetters = (input, lettersInHand) => {
 };
 
 export const scoreWord = (word) => {
-
   let score = 0;
 
   for (let letter of word) {
@@ -94,7 +91,6 @@ export const scoreWord = (word) => {
 };
 
 export const highestScoreFrom = (words) => {
-
   let bestScore = 0;
 
   for (const word of words) {
@@ -111,7 +107,7 @@ export const highestScoreFrom = (words) => {
     }
   }
 
-  if (ties.length === 1) return { word: ties[0].word, score: bestScore };
+  if (ties.length === 1) return { word: ties[0].word, score: ties[0].score };
 
   return pickWinnerFromTies(ties);
 };
