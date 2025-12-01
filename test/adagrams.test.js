@@ -144,7 +144,7 @@ describe('Adagrams', () => {
     it('accurately finds best scoring word even if not sorted', () => {
       const words = ['XXX', 'XXXX', 'X', 'XX'];
       const correct = { word: 'XXXX', score: scoreWord('XXXX') };
-      // double-check later
+
       expect(highestScoreFrom(words)).toEqual(correct);
     });
 

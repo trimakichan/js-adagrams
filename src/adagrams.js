@@ -36,8 +36,10 @@ const pickWinnerFromTies = ties => {
     }
   }
 
-  return { word: winner.word, score: winner.score };
-
+  return {
+    word: winner.word,
+    score: winner.score
+  };
 };
 
 export const drawLetters = () => {
@@ -52,7 +54,7 @@ export const drawLetters = () => {
     letterPool[randomIndex] = letterPool[remainingLetters - 1];
     letterPool.pop();
     remainingLetters--;
-  };
+  }
 
   return hand;
 
@@ -98,7 +100,7 @@ export const highestScoreFrom = (words) => {
     if (score > bestScore) {
       bestScore = score;
     }
-  };
+  }
 
   const ties = [];
   for (const word of words) {
@@ -107,7 +109,12 @@ export const highestScoreFrom = (words) => {
     }
   }
 
-  if (ties.length === 1) return { word: ties[0].word, score: ties[0].score };
+  if (ties.length === 1) {
+    return {
+      word: ties[0].word,
+      score: ties[0].score
+    };
+  }
 
   return pickWinnerFromTies(ties);
 };
